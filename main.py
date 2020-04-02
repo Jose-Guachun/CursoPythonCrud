@@ -18,24 +18,43 @@ def list_client():
     print(clientes)
 
 
+def update_Client(client_name, updated_client_name):
+    global clientes
+    if client_name in clientes:
+        clientes=clientes.replace(client_name+',',updated_client_name+',')
+    else:
+        print('Client is not in client list')
+
+
 def Print_Welcome():
     print('WELCOME TO PLATZI VENTAS')
     print('*'*50)
     print('What would you like to do today?')
     print('[C]reate client')
+    print('[U]pdate client')
     print('[D]elete client')
+
+
+def get_client_name():
+    return input('What is the client name?: ')
 
 
 if __name__=='__main__':
     Print_Welcome()
     
     command=input('::')
+    command=command.upper()
 
-    if command.upper()=='C':
-        client_name=input('What is the client name? ')
+    if command=='C':
+        client_name=get_client_name()
         create_client(client_name)
         list_client()
-    elif command.upper()=='D':
+    elif command=='D':
             pass
+    elif command=='U':
+            client_name=get_client_name()
+            update_Client_name=input('What is the update name client?: ')
+            update_Client(client_name, update_Client_name)
+            list_client()
     else:
         print('Invalid command')
