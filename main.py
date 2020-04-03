@@ -26,6 +26,12 @@ def update_Client(client_name, updated_client_name):
         print('Client is not in client list')
 
 
+def delete_client(client_name):
+    global clientes
+    if client_name in clientes:
+        clientes=clientes.replace(client_name+',', '')
+    else:
+        pass
 def Print_Welcome():
     print('WELCOME TO PLATZI VENTAS')
     print('*'*50)
@@ -50,7 +56,9 @@ if __name__=='__main__':
         create_client(client_name)
         list_client()
     elif command=='D':
-            pass
+            client_name=get_client_name()
+            delete_client(client_name)
+            list_client()
     elif command=='U':
             client_name=get_client_name()
             update_Client_name=input('What is the update name client?: ')
