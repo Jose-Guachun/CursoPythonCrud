@@ -1,7 +1,7 @@
 import sys
 
 #variables globales
-clientes='pablo, ricardo, '
+clientes=['pablo', 'ricardo']
 
 #Funciones de reutilizacion de codigo
 def get_client_name():
@@ -23,30 +23,25 @@ def get_not_in_list():
     return print('Client not in client\'s list')
 
 
-def _add_coma():
-    global clientes
-    clientes+=','
-
-
 #Funciones de iteraccion directa CRUD
 def create_client(client_name):
     global clientes
     if client_name not in clientes:
-        clientes+=client_name
-        _add_coma()
+        clientes.append(client_name)
     else:
         print('Clien alredy is in the client\'s list')
 
 
 def list_client():
-    global clientes
-    print(clientes)
+    for idx, client in enumerate(clientes):
+        print('{}:{}'.format(idx, client))
 
 
 def update_Client(client_name, updated_client_name):
     global clientes
     if client_name in clientes:
-        clientes=clientes.replace(client_name+',',updated_client_name+',')
+        index=clientes.index(client_name)
+        clientes[index]=updated_client_name
     else:
         get_not_in_list()
 
@@ -54,14 +49,13 @@ def update_Client(client_name, updated_client_name):
 def delete_client(client_name):
     global clientes
     if client_name in clientes:
-        clientes=clientes.replace(client_name+',', '')
+        clientes.remove(client_name)
     else:
         get_not_in_list()
 
 
 def search_client(client_name):
-    clients_list=clientes.split(',')
-    for client in clients_list:
+    for client in clientes:
         if client != client_name:
             continue
         else:
