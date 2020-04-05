@@ -1,7 +1,21 @@
 import sys
 
 #variables globales
-clientes=['pablo', 'ricardo']
+clientes=[
+    {
+        'name':'pablo',
+        'company':'Google',
+        'email':'pablo@google.com',
+        'position':'softare engineer',
+    },
+    {
+        'name':'jose',
+        'company':'Facebook',
+        'email':'jose@facebook.com',
+        'position':'Data Enginer',
+    }
+
+]
 
 #Funciones de reutilizacion de codigo
 def get_client_name():
@@ -23,40 +37,60 @@ def get_not_in_list():
     return print('Client not in client\'s list')
 
 
+def get_client_field(field_name):
+    field=None
+    while not field:
+        field=input('What is the client {}?'.format(field_name))
+    return field
+
+def get_client_from_user():
+    client = {
+        'name': get_client_field('name'),
+        'company': get_client_field('company'),
+        'email': get_client_field('email'),
+        'position': get_client_field('position'),
+    }
+
+    return client
 #Funciones de iteraccion directa CRUD
-def create_client(client_name):
+def create_client(client):
     global clientes
-    if client_name not in clientes:
-        clientes.append(client_name)
+    if client not in clientes:
+        clientes.append(client)
     else:
         print('Clien alredy is in the client\'s list')
 
 
 def list_client():
     for idx, client in enumerate(clientes):
-        print('{}:{}'.format(idx, client))
+        print('{uid}|{name}|{company}|{email}|{position}'.format(
+            uid=idx,
+            name=client['name'],
+            company=client['company'],
+            email=client['email'],
+            position=client['position']))
 
 
-def update_Client(client_name, updated_client_name):
+def update_client(client_id, updated_client):
     global clientes
-    if client_name in clientes:
-        index=clientes.index(client_name)
-        clientes[index]=updated_client_name
+
+    if len(clientes) - 1 >= client_id:
+        clientes[client_id] = updated_client
     else:
-        get_not_in_list()
+        get_not_in_list
 
 
-def delete_client(client_name):
+def delete_client(client_id):
     global clientes
-    if client_name in clientes:
-        clientes.remove(client_name)
-    else:
-        get_not_in_list()
+    for idx in enumerate(clientes):
+        if idx==client_id:
+            del clientes[idx]
+            break
 
 
 def search_client(client_name):
     for client in clientes:
-        if client != client_name:
+        if client['name'] != client_name:
             continue
         else:
             return True
@@ -82,22 +116,22 @@ if __name__=='__main__':
     #seleccion e invocacion de funciones segun lo 
     # que seleccione el usuario
     if command=='C':
-        client_name=get_client_name()
-        create_client(client_name)
+        client=get_client_from_user()
+        create_client(client)
         list_client()
     elif command=='L':
         list_client()
     elif command=='D':
-        client_name=get_client_name()
-        delete_client(client_name)
+        client_id=int(get_client_field('id'))
+        delete_client(client_id)
         list_client()
     elif command=='U':
-        client_name=get_client_name()
-        update_Client_name=input('What is the update name client?: ')
-        update_Client(client_name, update_Client_name)
+        client_id=int(get_client_field('id'))
+        updated_client=get_client_from_user()
+        update_client(client_id, updated_client)
         list_client()
     elif command=='S':
-        client_name=get_client_name()
+        client_name=get_client_field('name')
         found=search_client(client_name)
         if found:
             print('The client is in the client\'s list')
