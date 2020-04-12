@@ -28,6 +28,16 @@ class ClientServices:
                 updated_clients.append(client)
         
         self._save_to_disk(updated_clients)
+
+    def delete_client(self, delete_client):
+        clients=self.list_clients()
+
+        for idx in clients:
+            if idx['uid']==delete_client.uid:
+                clients.remove(delete_client.to_dict())
+
+        self._save_to_disk(clients)
+    
     
     def _save_to_disk(self, clients):
         
